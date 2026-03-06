@@ -118,14 +118,19 @@
     function drawFrame(index) {
         const img = frames[index];
         if (!img) return;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Cover fit
         const cw = canvas.width;
         const ch = canvas.height;
+
+        // Fill black background
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, cw, ch);
+
+        // Contain-fit scaled down to ~75% so frame sits centered, not covering full viewport
         const iw = img.naturalWidth;
         const ih = img.naturalHeight;
-        const scale = Math.max(cw / iw, ch / ih);
+        const scaleFactor = 0.78;
+        const scale = Math.min(cw / iw, ch / ih) * scaleFactor;
         const sw = iw * scale;
         const sh = ih * scale;
         const sx = (cw - sw) / 2;
