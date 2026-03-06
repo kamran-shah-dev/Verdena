@@ -5,13 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verdena — Botanical Skincare</title>
-    <meta name="description"
-        content="A modern clean skincare brand rooted in botanical ingredients, crafted for people who believe in science-backed beauty with nature at its core.">
+    <meta name="description" content="A modern clean skincare brand rooted in botanical ingredients, crafted for people who believe in science-backed beauty with nature at its core.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Inter:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@200;300;400;500&family=Italiana&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
 </head>
 
@@ -19,50 +16,52 @@
     <!-- Preloader -->
     <div id="preloader">
         <div class="preloader-inner">
-            <div class="preloader-logo">VERDENA</div>
+            <div class="preloader-wordmark">VERDENA</div>
+            <div class="preloader-rule"></div>
             <div class="preloader-tagline">Botanical Skincare</div>
             <div class="preloader-bar-wrap">
                 <div class="preloader-bar" id="preloader-bar"></div>
             </div>
-            <div class="preloader-percent" id="preloader-percent">Loading 0%</div>
+            <div class="preloader-percent" id="preloader-percent">0%</div>
         </div>
     </div>
 
-    <!-- Navbar -->
-    <nav id="navbar">
+    <!-- Navbar — centered layout with logo in middle -->
+    <nav id="navbar" class="hero-mode">
         <div class="nav-inner">
-            <a href="#hero" class="nav-logo">VERDENA</a>
-            <div class="nav-links" id="nav-links">
+            <div class="nav-links-left" id="nav-links-left">
                 <a href="#products" class="nav-link" data-section="products">Products</a>
                 <a href="#ingredients" class="nav-link" data-section="ingredients">Ingredients</a>
-                <a href="#benefits" class="nav-link" data-section="benefits">Benefits</a>
+                <a href="#benefits" class="nav-link" data-section="benefits">Ritual</a>
+            </div>
+
+            <div class="nav-logo-center">
+                <a href="#hero" class="nav-logo">VERDENA</a>
+            </div>
+
+            <div class="nav-links-right" id="nav-links-right">
                 <a href="#reviews" class="nav-link" data-section="reviews">Reviews</a>
                 <a href="#faq" class="nav-link" data-section="faq">FAQ</a>
-                <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+                <div class="nav-controls">
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </svg>
+                        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                    <button class="nav-cta-btn">Shop Now</button>
+                </div>
             </div>
-            <div class="nav-right-group">
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="5" />
-                        <line x1="12" y1="1" x2="12" y2="3" />
-                        <line x1="12" y1="21" x2="12" y2="23" />
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                        <line x1="1" y1="12" x2="3" y2="12" />
-                        <line x1="21" y1="12" x2="23" y2="12" />
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                    </svg>
-                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                    </svg>
-                </button>
-                <button id="nav-hamburger" class="nav-hamburger" aria-label="Menu">
-                    <span></span><span></span><span></span>
-                </button>
-            </div>
+
+            <!-- Mobile: just logo + hamburger -->
+            <button id="nav-hamburger" class="nav-hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
 
@@ -71,7 +70,7 @@
         <div class="mobile-nav-links">
             <a href="#products" class="mobile-nav-link">Products</a>
             <a href="#ingredients" class="mobile-nav-link">Ingredients</a>
-            <a href="#benefits" class="mobile-nav-link">Benefits</a>
+            <a href="#benefits" class="mobile-nav-link">Ritual</a>
             <a href="#reviews" class="mobile-nav-link">Reviews</a>
             <a href="#faq" class="mobile-nav-link">FAQ</a>
             <a href="#contact" class="mobile-nav-link">Contact</a>
@@ -80,71 +79,64 @@
 
     <!-- Hero Section -->
     <section id="hero">
-        <div class="hero-sticky">
+        <div class="hero-sticky hero-cinematic-bars">
             <canvas id="hero-canvas"></canvas>
+
             <div class="hero-overlay">
                 <div class="hero-content-left">
-                    <div class="hero-logo-small">VERDENA</div>
-                    <h1 class="hero-product-name" id="hero-product-name">VITAMIN C</h1>
-                    <p class="hero-product-subtitle" id="hero-product-subtitle">BRIGHTENING SERUM</p>
-                    <p class="hero-product-desc" id="hero-product-desc">A lightweight daily serum packed with stabilized
-                        Vitamin C to visibly even skin tone, fade dark spots, and restore a natural lit-from-within
-                        glow.</p>
+                    <div class="hero-eyebrow">
+                        <div class="hero-eyebrow-line"></div>
+                        <span class="hero-eyebrow-text">Verdena Collection</span>
+                    </div>
+                    <h1 class="hero-product-name" id="hero-product-name">Vitamin C</h1>
+                    <p class="hero-product-subtitle" id="hero-product-subtitle">Brightening Serum</p>
+                    <p class="hero-product-desc" id="hero-product-desc">A lightweight daily serum packed with stabilized Vitamin C to visibly even skin tone, fade dark spots, and restore a natural lit-from-within glow.</p>
                     <div class="hero-ctas">
-                        <button class="btn btn-outline">ADD TO</button>
-                        <button class="btn btn-solid">CART</button>
-                    </div>
-                </div>
-                <div class="hero-nav-right">
-                    <div class="hero-index" id="hero-index">01</div>
-                    <div class="hero-variant-nav">
-                        <button class="variant-btn variant-prev" id="variant-prev" aria-label="Previous product">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="18 15 12 9 6 15" />
-                            </svg>
-                            <span class="variant-label">PREV</span>
-                        </button>
-                        <div class="variant-divider"></div>
-                        <button class="variant-btn variant-next" id="variant-next" aria-label="Next product">
-                            <span class="variant-label">NEXT</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="6 9 12 15 18 9" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="variant-loading hidden" id="variant-loading">
-                        <div class="variant-loading-spinner"></div>
+                        <button class="btn btn-primary">Shop Now</button>
+                        <button class="btn btn-ghost">Learn More</button>
                     </div>
                 </div>
             </div>
+
+            <!-- Right panel: large number + controls -->
+            <div class="hero-right-panel">
+                <div class="hero-counter" id="hero-index">01</div>
+                <div class="hero-variant-controls">
+                    <button class="variant-btn variant-prev" id="variant-prev" aria-label="Previous">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="18 15 12 9 6 15"/></svg>
+                        <span class="variant-label">Prev</span>
+                    </button>
+                    <div class="variant-track" id="variant-track">
+                        <div class="variant-dot active" data-index="0"></div>
+                        <div class="variant-dot" data-index="1"></div>
+                        <div class="variant-dot" data-index="2"></div>
+                    </div>
+                    <button class="variant-btn variant-next" id="variant-next" aria-label="Next">
+                        <span class="variant-label">Next</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                </div>
+            </div>
+
             <div class="hero-scroll-hint" id="hero-scroll-hint">
-                <span>Scroll to explore</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2">
-                    <polyline points="6 9 12 15 18 9" />
-                </svg>
+                <div class="scroll-line"></div>
+                <span>Scroll</span>
             </div>
         </div>
     </section>
 
-    <!-- Products / About -->
+    <!-- Products -->
     <section id="products" class="section">
         <div class="container">
             <div class="section-header reveal">
                 <span class="section-label">Our Collection</span>
-                <h2 class="section-title">Products</h2>
-                <p class="section-subtitle">Each formula combines potent botanical extracts with clinically-proven
-                    actives for skincare that truly works.</p>
+                <h2 class="section-title">Crafted Formulas</h2>
+                <p class="section-subtitle">Each formula combines potent botanical extracts with clinically-proven actives for skincare that truly works.</p>
             </div>
-            <!-- Search & Filter Bar -->
             <div class="products-toolbar reveal">
                 <div class="search-wrap">
-                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8" />
-                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
                     </svg>
                     <input type="text" id="product-search" class="product-search" placeholder="Search products...">
                 </div>
@@ -157,21 +149,20 @@
                     <button class="category-btn" data-category="Treatments">Treatments</button>
                 </div>
             </div>
-            <!-- Dynamic Product Catalog Grid -->
             <div class="products-catalog-grid" id="products-catalog-grid"></div>
+
             <!-- Brand Story -->
             <div class="brand-story reveal">
-                <div class="brand-story-text" data-parallax="0.12">
-                    <span class="section-label">Our Story</span>
-                    <h3 class="brand-story-title">Rooted in Nature, Backed by Science</h3>
-                    <p>Verdena was born from a simple belief: that the most powerful skincare ingredients already exist
-                        in nature. We combine centuries-old botanical wisdom with modern clinical research to create
-                        formulas that are gentle yet transformative.</p>
-                    <p>Every product is vegan, cruelty-free, and formulated without parabens, sulfates, or synthetic
-                        fragrances. Because what you don't put on your skin matters just as much as what you do.</p>
+                <div class="brand-story-text" data-parallax="0.1">
+                    <span class="section-label brand-story-label">Our Story</span>
+                    <h3 class="brand-story-title">Rooted in Nature,<br>Backed by Science</h3>
+                    <p>Verdena was born from a simple belief: that the most powerful skincare ingredients already exist in nature. We combine centuries-old botanical wisdom with modern clinical research to create formulas that are gentle yet transformative.</p>
+                    <p>Every product is vegan, cruelty-free, and formulated without parabens, sulfates, or synthetic fragrances. Because what you don't put on your skin matters just as much as what you do.</p>
+                    <div style="margin-top: 32px;">
+                        <button class="btn btn-outline-dark">Our Philosophy</button>
+                    </div>
                 </div>
-                <div class="brand-story-image" data-parallax="0.2"
-                    style="background-image: url('frames_prod_1/frame_060_delay-0.033s.webp')"></div>
+                <div class="brand-story-image" data-parallax="0.18" style="background-image: url('frames_prod_1/frame_060_delay-0.033s.webp')"></div>
             </div>
         </div>
     </section>
@@ -182,45 +173,38 @@
             <div class="section-header reveal">
                 <span class="section-label">What's Inside</span>
                 <h2 class="section-title">Key Ingredients</h2>
-                <p class="section-subtitle">We source the purest botanical extracts and combine them with
-                    clinically-tested actives for maximum efficacy.</p>
+                <p class="section-subtitle">We source the purest botanical extracts and combine them with clinically-tested actives for maximum efficacy.</p>
             </div>
             <div class="ingredients-grid">
                 <div class="ingredient-card reveal">
                     <div class="ingredient-icon">🍊</div>
                     <h4 class="ingredient-name">Vitamin C</h4>
-                    <p class="ingredient-desc">Potent antioxidant that brightens skin, fades dark spots, and protects
-                        against environmental damage.</p>
+                    <p class="ingredient-desc">Potent antioxidant that brightens skin, fades dark spots, and protects against environmental damage.</p>
                 </div>
                 <div class="ingredient-card reveal">
                     <div class="ingredient-icon">💧</div>
                     <h4 class="ingredient-name">Hyaluronic Acid</h4>
-                    <p class="ingredient-desc">Draws moisture deep into skin for intense hydration and a plumped, dewy
-                        appearance.</p>
+                    <p class="ingredient-desc">Draws moisture deep into skin for intense hydration and a plumped, dewy appearance.</p>
                 </div>
                 <div class="ingredient-card reveal">
                     <div class="ingredient-icon">✨</div>
                     <h4 class="ingredient-name">Retinol</h4>
-                    <p class="ingredient-desc">Accelerates cell turnover to smooth fine lines, improve texture, and
-                        reveal youthful skin.</p>
+                    <p class="ingredient-desc">Accelerates cell turnover to smooth fine lines, improve texture, and reveal youthful skin.</p>
                 </div>
                 <div class="ingredient-card reveal">
                     <div class="ingredient-icon">🍵</div>
                     <h4 class="ingredient-name">Green Tea Extract</h4>
-                    <p class="ingredient-desc">Rich in polyphenols that calm inflammation, reduce redness, and shield
-                        from free radicals.</p>
+                    <p class="ingredient-desc">Rich in polyphenols that calm inflammation, reduce redness, and shield from free radicals.</p>
                 </div>
                 <div class="ingredient-card reveal">
                     <div class="ingredient-icon">🌿</div>
                     <h4 class="ingredient-name">Niacinamide</h4>
-                    <p class="ingredient-desc">Strengthens the skin barrier, minimizes pores, and evens out skin tone
-                        over time.</p>
+                    <p class="ingredient-desc">Strengthens the skin barrier, minimizes pores, and evens out skin tone over time.</p>
                 </div>
                 <div class="ingredient-card reveal">
                     <div class="ingredient-icon">🥥</div>
                     <h4 class="ingredient-name">Squalane</h4>
-                    <p class="ingredient-desc">Plant-derived oil that locks in moisture without clogging pores or
-                        feeling greasy.</p>
+                    <p class="ingredient-desc">Plant-derived oil that locks in moisture without clogging pores or feeling greasy.</p>
                 </div>
             </div>
         </div>
@@ -230,34 +214,30 @@
     <section id="benefits" class="section">
         <div class="container">
             <div class="section-header reveal">
-                <span class="section-label">Your Routine</span>
+                <span class="section-label">Your Ritual</span>
                 <h2 class="section-title">How To Use</h2>
-                <p class="section-subtitle">A simple, effective routine for radiant skin. Follow these steps morning and
-                    night.</p>
+                <p class="section-subtitle">A simple, effective routine for radiant skin. Follow these steps morning and night.</p>
             </div>
             <div class="steps-timeline">
                 <div class="step-card reveal">
                     <div class="step-number">01</div>
                     <div class="step-content">
                         <h4 class="step-title">Cleanse</h4>
-                        <p class="step-desc">Start with a gentle cleanser to remove impurities. Pat skin dry — never
-                            rub.</p>
+                        <p class="step-desc">Start with a gentle cleanser to remove impurities. Pat skin dry — never rub.</p>
                     </div>
                 </div>
                 <div class="step-card reveal">
                     <div class="step-number">02</div>
                     <div class="step-content">
                         <h4 class="step-title">Tone</h4>
-                        <p class="step-desc">Apply toner to balance pH and prepare skin to absorb serums more
-                            effectively.</p>
+                        <p class="step-desc">Apply toner to balance pH and prepare skin to absorb serums more effectively.</p>
                     </div>
                 </div>
                 <div class="step-card reveal">
                     <div class="step-number">03</div>
                     <div class="step-content">
                         <h4 class="step-title">Apply Serum</h4>
-                        <p class="step-desc">Dispense 2–3 drops of your Verdena serum. Gently press into skin with
-                            upward motions.</p>
+                        <p class="step-desc">Dispense 2–3 drops of your Verdena serum. Gently press into skin with upward motions.</p>
                     </div>
                 </div>
                 <div class="step-card reveal">
@@ -271,8 +251,7 @@
                     <div class="step-number">05</div>
                     <div class="step-content">
                         <h4 class="step-title">Protect</h4>
-                        <p class="step-desc">In the morning, finish with SPF 30+. Sun protection is the most effective
-                            anti-aging step.</p>
+                        <p class="step-desc">In the morning, finish with SPF 30+. Sun protection is the most effective anti-aging step.</p>
                     </div>
                 </div>
             </div>
@@ -313,14 +292,13 @@
         <div class="container">
             <div class="section-header reveal">
                 <span class="section-label">Testimonials</span>
-                <h2 class="section-title">Reviews</h2>
-                <p class="section-subtitle">What real customers have to say.</p>
+                <h2 class="section-title">What They Say</h2>
+                <p class="section-subtitle">Real customers, real results.</p>
             </div>
             <div class="reviews-grid">
                 <div class="review-card reveal">
                     <div class="review-stars">★★★★★</div>
-                    <p class="review-text">"I've tried dozens of Vitamin C serums, but Verdena's is in a league of its
-                        own. My dark spots have faded dramatically and my skin has this incredible glow."</p>
+                    <p class="review-text">"I've tried dozens of Vitamin C serums, but Verdena's is in a league of its own. My dark spots have faded dramatically and my skin has this incredible glow."</p>
                     <div class="review-author">
                         <div class="review-avatar">S</div>
                         <div>
@@ -331,8 +309,7 @@
                 </div>
                 <div class="review-card reveal">
                     <div class="review-stars">★★★★★</div>
-                    <p class="review-text">"The hyaluronic serum is divine. My skin stays plump and hydrated all day.
-                        Even through winter, no more dry patches!"</p>
+                    <p class="review-text">"The hyaluronic serum is divine. My skin stays plump and hydrated all day. Even through winter, no more dry patches!"</p>
                     <div class="review-author">
                         <div class="review-avatar">J</div>
                         <div>
@@ -343,8 +320,7 @@
                 </div>
                 <div class="review-card reveal">
                     <div class="review-stars">★★★★★</div>
-                    <p class="review-text">"I was nervous about retinol, but Verdena's formula is so gentle. After 6
-                        weeks, my fine lines have noticeably softened."</p>
+                    <p class="review-text">"I was nervous about retinol, but Verdena's formula is so gentle. After 6 weeks, my fine lines have noticeably softened."</p>
                     <div class="review-author">
                         <div class="review-avatar">A</div>
                         <div>
@@ -355,8 +331,7 @@
                 </div>
                 <div class="review-card reveal">
                     <div class="review-stars">★★★★☆</div>
-                    <p class="review-text">"Beautiful packaging, luxurious texture, and real results. The entire line
-                        feels premium without the premium price tag."</p>
+                    <p class="review-text">"Beautiful packaging, luxurious texture, and real results. The entire line feels premium without the premium price tag."</p>
                     <div class="review-author">
                         <div class="review-avatar">R</div>
                         <div>
@@ -380,98 +355,61 @@
                 <div class="faq-item reveal">
                     <button class="faq-question">
                         <span>Is Verdena suitable for sensitive skin?</span>
-                        <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9" />
-                        </svg>
+                        <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
-                    <div class="faq-answer">
-                        <p>Yes! All products are dermatologist-tested and free from harsh chemicals, parabens, and
-                            synthetic fragrances. We always recommend patch testing any new product.</p>
-                    </div>
+                    <div class="faq-answer"><p>Yes! All products are dermatologist-tested and free from harsh chemicals, parabens, and synthetic fragrances. We always recommend patch testing any new product.</p></div>
                 </div>
                 <div class="faq-item reveal">
                     <button class="faq-question">
                         <span>Are your products vegan and cruelty-free?</span>
-                        <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9" />
-                        </svg>
+                        <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
-                    <div class="faq-answer">
-                        <p>Absolutely. Verdena is 100% vegan and certified cruelty-free by Leaping Bunny and PETA. No
-                            animal testing, no animal-derived ingredients.</p>
-                    </div>
+                    <div class="faq-answer"><p>Absolutely. Verdena is 100% vegan and certified cruelty-free by Leaping Bunny and PETA. No animal testing, no animal-derived ingredients.</p></div>
                 </div>
                 <div class="faq-item reveal">
                     <button class="faq-question">
                         <span>Can I use Vitamin C serum with retinol?</span>
-                        <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9" />
-                        </svg>
+                        <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
-                    <div class="faq-answer">
-                        <p>We recommend using them at different times — Vitamin C in the morning for antioxidant
-                            protection, Retinol in the evening for overnight renewal.</p>
-                    </div>
+                    <div class="faq-answer"><p>We recommend using them at different times — Vitamin C in the morning for antioxidant protection, Retinol in the evening for overnight renewal.</p></div>
                 </div>
                 <div class="faq-item reveal">
                     <button class="faq-question">
                         <span>How long until I see results?</span>
-                        <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9" />
-                        </svg>
+                        <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
-                    <div class="faq-answer">
-                        <p>Hydration improves immediately. Brightening and dark spot reduction in 4–6 weeks. Anti-aging
-                            results from retinol around 8–12 weeks. Consistency is key!</p>
-                    </div>
+                    <div class="faq-answer"><p>Hydration improves immediately. Brightening and dark spot reduction in 4–6 weeks. Anti-aging results from retinol around 8–12 weeks. Consistency is key!</p></div>
                 </div>
                 <div class="faq-item reveal">
                     <button class="faq-question">
                         <span>What is your return policy?</span>
-                        <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9" />
-                        </svg>
+                        <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
-                    <div class="faq-answer">
-                        <p>30-day satisfaction guarantee. Return any product, even opened, for a full refund. We believe
-                            in our formulas.</p>
-                    </div>
+                    <div class="faq-answer"><p>30-day satisfaction guarantee. Return any product, even opened, for a full refund. We believe in our formulas.</p></div>
                 </div>
                 <div class="faq-item reveal">
                     <button class="faq-question">
                         <span>Do you offer international shipping?</span>
-                        <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9" />
-                        </svg>
+                        <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
-                    <div class="faq-answer">
-                        <p>Yes! Free US shipping over $50. International rates vary by location. All orders include
-                            tracking and eco-friendly packaging.</p>
-                    </div>
+                    <div class="faq-answer"><p>Yes! Free US shipping over $50. International rates vary by location. All orders include tracking and eco-friendly packaging.</p></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Final CTA -->
+    <!-- CTA -->
     <section id="contact" class="section cta-section">
         <div class="container">
             <div class="cta-content reveal">
                 <span class="section-label">Ready?</span>
                 <h2 class="cta-title">Your Best Skin Starts Here</h2>
-                <p class="cta-desc">Join thousands who have transformed their skincare routine with Verdena.
-                    Science-backed, nature-powered, designed for real results.</p>
+                <p class="cta-desc">Join thousands who have transformed their skincare routine with Verdena. Science-backed, nature-powered, designed for real results.</p>
                 <div class="cta-buttons">
-                    <button class="btn btn-solid btn-large">Shop Now</button>
-                    <button class="btn btn-outline btn-large">Learn More</button>
+                    <button class="btn btn-sage btn-large">Shop the Collection</button>
+                    <button class="btn btn-outline-dark btn-large">Learn More</button>
                 </div>
-                <p class="cta-note">Free shipping over $50 · 30-day money-back guarantee</p>
+                <p class="cta-note">Free shipping over $50 · 30-day money-back guarantee · Vegan & Cruelty-Free</p>
             </div>
         </div>
     </section>
@@ -481,9 +419,9 @@
         <div class="container">
             <div class="footer-top">
                 <div class="footer-brand">
-                    <div class="footer-logo">VERDENA</div>
-                    <p class="footer-tagline">A modern clean skincare brand rooted in botanical ingredients, crafted for
-                        people who believe in science-backed beauty with nature at its core.</p>
+                    <div class="footer-wordmark">VERDENA</div>
+                    <div class="footer-rule"></div>
+                    <p class="footer-tagline">A modern clean skincare brand rooted in botanical ingredients, crafted for people who believe in science-backed beauty with nature at its core.</p>
                 </div>
                 <div class="footer-links-group">
                     <div class="footer-links-col">
@@ -507,31 +445,18 @@
             </div>
             <div class="footer-bottom">
                 <div class="footer-social">
-                    <a href="#" class="social-icon" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg"
-                            width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-                        </svg></a>
-                    <a href="#" class="social-icon" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg"
-                            width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path
-                                d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-                        </svg></a>
-                    <a href="#" class="social-icon" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg"
-                            width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-                        </svg></a>
-                    <a href="#" class="social-icon" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg"
-                            width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path
-                                d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
-                            <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
-                        </svg></a>
+                    <a href="#" class="social-icon" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Twitter">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="YouTube">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                    </a>
                 </div>
                 <p class="footer-copy">&copy; 2026 Verdena. All rights reserved.</p>
             </div>
@@ -540,5 +465,4 @@
 
     <script src="index.js"></script>
 </body>
-
 </html>
