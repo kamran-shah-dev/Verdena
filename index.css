@@ -62,7 +62,6 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
-    overflow-x: hidden;
 }
 
 body {
@@ -71,7 +70,6 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     transition: background 0.6s var(--ease-out), color 0.6s var(--ease-out);
-    overflow-x: hidden;
 }
 
 a {
@@ -339,7 +337,7 @@ img {
 
 /* ===== HERO SECTION ===== */
 #hero {
-    height: 350vh;
+    height: 200vh;
     position: relative;
 }
 
@@ -368,6 +366,7 @@ img {
     padding: 0 clamp(30px, 6vw, 100px);
     background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.2) 100%);
     z-index: 2;
+    width: 100%;
 }
 
 .hero-content-left {
@@ -1310,7 +1309,7 @@ img {
     }
 
     #hero {
-        height: 250vh;
+        height: 150vh;
     }
 
     .hero-overlay {
