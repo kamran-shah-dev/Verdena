@@ -136,10 +136,14 @@
         const cw = canvas.width;
         const ch = canvas.height;
 
-        // Cover fit — frame fills entire hero background
+        // Fill black background for letterboxing
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, cw, ch);
+
+        // Contain fit — frame is scaled to fit fully inside the canvas
         const iw = img.naturalWidth;
         const ih = img.naturalHeight;
-        const scale = Math.max(cw / iw, ch / ih);
+        const scale = Math.min(cw / iw, ch / ih);
         const sw = iw * scale;
         const sh = ih * scale;
         const sx = (cw - sw) / 2;

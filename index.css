@@ -582,6 +582,10 @@ img {
     position: relative;
 }
 
+#hero+.section {
+    padding-top: 20;
+}
+
 .section-alt {
     background: var(--bg-secondary);
 }
