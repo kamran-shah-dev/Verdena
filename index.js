@@ -4,8 +4,8 @@
     'use strict';
 
     /* ---------- CONFIGURATION ---------- */
-    const TOTAL_FRAMES = 192;
-    const FRAME_DIR = 'ezgif-split';
+    const TOTAL_FRAMES = 120;
+    const FRAME_DIR = 'frames_prod_1';
 
     const VARIANTS = [
         {
@@ -28,10 +28,25 @@
         }
     ];
 
+    /* ---------- PRODUCT CATALOG FOR SEARCH / FILTER ---------- */
+    const ALL_PRODUCTS = [
+        { name: 'Vitamin C Brightening Serum', category: 'Serums', price: 48, badge: 'Bestseller', desc: 'Stabilized Vitamin C to even skin tone and restore radiance.', frame: 10 },
+        { name: 'Hyaluronic Deep Hydration Serum', category: 'Serums', price: 52, badge: 'New', desc: 'Triple-weight hyaluronic acid for 72-hour dewy hydration.', frame: 40 },
+        { name: 'Retinol Night Renewal Cream', category: 'Creams', price: 56, badge: '', desc: 'Gentle retinol that works overnight to smooth fine lines.', frame: 70 },
+        { name: 'Niacinamide Pore Refiner', category: 'Serums', price: 42, badge: '', desc: 'Minimizes pores and evens skin tone for a smoother complexion.', frame: 85 },
+        { name: 'Green Tea Calming Moisturizer', category: 'Creams', price: 44, badge: 'Popular', desc: 'Soothes and hydrates sensitive skin with antioxidant-rich green tea.', frame: 95 },
+        { name: 'Squalane Oil Cleanser', category: 'Cleansers', price: 36, badge: '', desc: 'Dissolves makeup and impurities without stripping natural oils.', frame: 105 },
+        { name: 'AHA/BHA Exfoliating Toner', category: 'Toners', price: 38, badge: 'New', desc: 'Gently removes dead skin cells for brighter, smoother skin.', frame: 20 },
+        { name: 'Peptide Eye Cream', category: 'Creams', price: 58, badge: '', desc: 'Reduces dark circles and puffiness around the delicate eye area.', frame: 55 },
+        { name: 'Centella Recovery Gel', category: 'Treatments', price: 40, badge: '', desc: 'Calms irritation and speeds skin barrier recovery.', frame: 30 },
+    ];
+
     let currentVariant = 0;
     let frames = [];
     let currentFrame = 0;
     let canvasReady = false;
+    let activeCategory = 'All';
+    let searchQuery = '';
 
     /* ---------- DOM ELEMENTS ---------- */
     const preloader = document.getElementById('preloader');
@@ -56,13 +71,13 @@
     /* ---------- FRAME PATH BUILDER ---------- */
     function getFramePath(index) {
         const idx = String(index).padStart(3, '0');
-        const delay = (index % 3 === 0) ? '0.041' : '0.042';
+        const delay = (index % 3 === 0) ? '0.033' : ((index % 3 === 2) ? '0.034' : '0.033');
         return `${FRAME_DIR}/frame_${idx}_delay-${delay}s.webp`;
     }
 
     function getAltFramePath(index) {
         const idx = String(index).padStart(3, '0');
-        const delay = (index % 3 === 0) ? '0.042' : '0.041';
+        const delay = (index % 3 === 2) ? '0.033' : '0.034';
         return `${FRAME_DIR}/frame_${idx}_delay-${delay}s.webp`;
     }
 
@@ -83,7 +98,6 @@
                     if (loaded === TOTAL_FRAMES) resolve(images);
                 };
                 img.onerror = () => {
-                    // Try alternate delay pattern
                     const altImg = new Image();
                     altImg.onload = () => {
                         images[i] = altImg;
@@ -122,11 +136,9 @@
         const cw = canvas.width;
         const ch = canvas.height;
 
-        // Fill black background
         ctx.fillStyle = '#0a0a0a';
         ctx.fillRect(0, 0, cw, ch);
 
-        // Contain-fit scaled down to ~75% so frame sits centered, not covering full viewport
         const iw = img.naturalWidth;
         const ih = img.naturalHeight;
         const scaleFactor = 0.78;
@@ -178,6 +190,35 @@
 
         // Active nav section
         updateActiveSection();
+
+        // Parallax effects on sections
+        applyParallax();
+    }
+
+    /* ---------- PARALLAX EFFECTS ---------- */
+    function applyParallax() {
+        // Parallax for section backgrounds and elements
+        document.querySelectorAll('[data-parallax]').forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const viewH = window.innerHeight;
+            if (rect.top < viewH && rect.bottom > 0) {
+                const progress = (viewH - rect.top) / (viewH + rect.height);
+                const speed = parseFloat(el.getAttribute('data-parallax')) || 0.15;
+                const offset = (progress - 0.5) * speed * 200;
+                el.style.transform = `translateY(${offset}px)`;
+            }
+        });
+
+        // Floating parallax for stat numbers
+        document.querySelectorAll('.stat-card').forEach((card, i) => {
+            const rect = card.getBoundingClientRect();
+            const viewH = window.innerHeight;
+            if (rect.top < viewH && rect.bottom > 0) {
+                const progress = (viewH - rect.top) / (viewH + rect.height);
+                const offset = Math.sin(progress * Math.PI) * (5 + i * 2);
+                card.style.transform = `translateY(${-offset}px)`;
+            }
+        });
     }
 
     /* ---------- ACTIVE SECTION ---------- */
@@ -202,23 +243,18 @@
         const newIndex = (currentVariant + direction + VARIANTS.length) % VARIANTS.length;
         const variant = VARIANTS[newIndex];
 
-        // Fade out
         heroContentLeft.classList.add('fading');
 
         setTimeout(() => {
-            // Update content
             heroName.textContent = variant.name;
             heroSubtitle.textContent = variant.subtitle;
             heroDesc.textContent = variant.desc;
             heroIndex.textContent = String(newIndex + 1).padStart(2, '0');
 
-            // Update accent color
             document.documentElement.style.setProperty('--variant-accent', variant.accent);
             document.documentElement.style.setProperty('--sage', variant.accent);
 
             currentVariant = newIndex;
-
-            // Fade in
             heroContentLeft.classList.remove('fading');
         }, 400);
     }
@@ -249,26 +285,149 @@
             btn.addEventListener('click', () => {
                 const item = btn.parentElement;
                 const isOpen = item.classList.contains('open');
-                // Close all
                 document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-                // Toggle current
                 if (!isOpen) item.classList.add('open');
             });
         });
     }
 
-    /* ---------- SCROLL REVEAL ---------- */
+    /* ---------- SCROLL REVEAL WITH STAGGER ---------- */
     function initReveal() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    // Stagger siblings
+                    const parent = entry.target.parentElement;
+                    const siblings = parent.querySelectorAll('.reveal');
+                    let delay = 0;
+                    siblings.forEach(sib => {
+                        if (!sib.classList.contains('visible')) {
+                            const rect = sib.getBoundingClientRect();
+                            if (rect.top < window.innerHeight + 50) {
+                                setTimeout(() => sib.classList.add('visible'), delay);
+                                delay += 100;
+                            }
+                        }
+                    });
                     entry.target.classList.add('visible');
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
+
+    /* ---------- COUNTER ANIMATION ---------- */
+    function initCounters() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.getAttribute('data-count'));
+                    if (isNaN(target)) return;
+                    animateCounter(el, target);
+                    observer.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('[data-count]').forEach(el => observer.observe(el));
+    }
+
+    function animateCounter(el, target) {
+        let current = 0;
+        const duration = 1800;
+        const start = performance.now();
+
+        function update(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // easeOutQuart
+            const eased = 1 - Math.pow(1 - progress, 4);
+            current = Math.round(eased * target);
+            el.textContent = current;
+            if (progress < 1) requestAnimationFrame(update);
+            else el.textContent = target;
+        }
+        requestAnimationFrame(update);
+    }
+
+    /* ---------- PRODUCT SEARCH & FILTER ---------- */
+    function initProductFilter() {
+        const searchInput = document.getElementById('product-search');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const grid = document.getElementById('products-catalog-grid');
+
+        if (!searchInput || !grid) return;
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase().trim();
+            renderProducts();
+        });
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeCategory = btn.getAttribute('data-category');
+                renderProducts();
+            });
+        });
+
+        renderProducts();
+    }
+
+    function renderProducts() {
+        const grid = document.getElementById('products-catalog-grid');
+        if (!grid) return;
+
+        let filtered = ALL_PRODUCTS;
+
+        if (activeCategory !== 'All') {
+            filtered = filtered.filter(p => p.category === activeCategory);
+        }
+
+        if (searchQuery) {
+            filtered = filtered.filter(p =>
+                p.name.toLowerCase().includes(searchQuery) ||
+                p.desc.toLowerCase().includes(searchQuery) ||
+                p.category.toLowerCase().includes(searchQuery)
+            );
+        }
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div class="no-results"><p>No products match your search.</p></div>`;
+            return;
+        }
+
+        grid.innerHTML = filtered.map((p, i) => {
+            const frameIdx = String(p.frame).padStart(3, '0');
+            const delay = (p.frame % 3 === 0) ? '0.033' : ((p.frame % 3 === 2) ? '0.034' : '0.033');
+            const imgPath = `${FRAME_DIR}/frame_${frameIdx}_delay-${delay}s.webp`;
+            const badgeHtml = p.badge ? `<span class="product-badge">${p.badge}</span>` : '';
+            return `
+                <div class="product-card-pro reveal visible" style="animation-delay: ${i * 80}ms">
+                    <div class="product-card-pro-image">
+                        <img src="${imgPath}" alt="${p.name}" loading="lazy">
+                        ${badgeHtml}
+                        <div class="product-card-pro-overlay">
+                            <button class="btn btn-solid btn-small">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-card-pro-content">
+                        <span class="product-card-pro-category">${p.category}</span>
+                        <h3 class="product-card-pro-name">${p.name}</h3>
+                        <p class="product-card-pro-desc">${p.desc}</p>
+                        <div class="product-card-pro-footer">
+                            <span class="product-card-pro-price">$${p.price}.00</span>
+                            <button class="btn-add-cart" aria-label="Add to cart">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+        }).join('');
     }
 
     /* ---------- SMOOTH SCROLL ---------- */
@@ -279,13 +438,11 @@
                 const target = document.querySelector(link.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth' });
-                    // Close mobile nav if open
                     if (mobileNav.classList.contains('open')) toggleMobileNav();
                 }
             });
         });
 
-        // Mobile nav links
         document.querySelectorAll('.mobile-nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -303,17 +460,12 @@
         initTheme();
         resizeCanvas();
 
-        // Preload all frames
         frames = await preloadFrames();
         canvasReady = true;
-
-        // Draw first frame
         drawFrame(0);
 
-        // Hide preloader
         setTimeout(() => preloader.classList.add('loaded'), 300);
 
-        // Bind events
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', resizeCanvas);
         themeToggle.addEventListener('click', toggleTheme);
@@ -324,12 +476,12 @@
         initFaq();
         initReveal();
         initSmoothScroll();
+        initCounters();
+        initProductFilter();
 
-        // Initial scroll state
         updateOnScroll();
     }
 
-    // Start
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
