@@ -3,29 +3,8 @@
 (function () {
     'use strict';
 
-    const TOTAL_FRAMES = 120;
-    const FRAME_DIR = 'frames_prod_1';
-
-    const VARIANTS = [
-        {
-            name: 'Vitamin C',
-            subtitle: 'Brightening Serum',
-            desc: 'A lightweight daily serum packed with stabilized Vitamin C to visibly even skin tone, fade dark spots, and restore a natural lit-from-within glow.',
-            accent: '#C9A96E'
-        },
-        {
-            name: 'Hyaluronic',
-            subtitle: 'Deep Hydration Serum',
-            desc: 'An ultra-hydrating formula with three molecular weights of hyaluronic acid that draw moisture deep into the skin for 72-hour plump, dewy hydration.',
-            accent: '#7089A0'
-        },
-        {
-            name: 'Retinol',
-            subtitle: 'Night Renewal Cream',
-            desc: 'A gentle yet effective retinol cream that works overnight to smooth fine lines, improve skin texture, and reveal visibly younger-looking skin by morning.',
-            accent: '#907C90'
-        }
-    ];
+    const TOTAL_FRAMES = 192;
+    const FRAME_DIR = 'ezgif-split';
 
     const ALL_PRODUCTS = [
         { name: 'Vitamin C Brightening Serum', category: 'Serums', price: 48, badge: 'Bestseller', desc: 'Stabilized Vitamin C to even skin tone and restore radiance.', frame: 10 },
@@ -39,7 +18,6 @@
         { name: 'Centella Recovery Gel', category: 'Treatments', price: 40, badge: '', desc: 'Calms irritation and speeds skin barrier recovery.', frame: 30 },
     ];
 
-    let currentVariant = 0;
     let frames = [];
     let currentFrame = 0;
     let canvasReady = false;
@@ -51,31 +29,22 @@
     const preloaderPercent = document.getElementById('preloader-percent');
     const canvas = document.getElementById('hero-canvas');
     const ctx = canvas.getContext('2d');
-    const heroSection = document.getElementById('hero');
-    const heroName = document.getElementById('hero-product-name');
-    const heroSubtitle = document.getElementById('hero-product-subtitle');
-    const heroDesc = document.getElementById('hero-product-desc');
-    const heroIndex = document.getElementById('hero-index');
-    const heroContentLeft = document.querySelector('.hero-content-left');
+    const heroSection = document.getElementById('hero-parallax');
+    const heroEndCta = document.getElementById('hero-end-cta');
     const scrollHint = document.getElementById('hero-scroll-hint');
     const navbar = document.getElementById('navbar');
     const themeToggle = document.getElementById('theme-toggle');
     const hamburger = document.getElementById('nav-hamburger');
     const mobileNav = document.getElementById('mobile-nav');
-    const prevBtn = document.getElementById('variant-prev');
-    const nextBtn = document.getElementById('variant-next');
 
     /* FRAME PATHS */
     function getFramePath(index) {
         const idx = String(index).padStart(3, '0');
-        const delay = (index % 3 === 2) ? '0.034' : '0.033';
-        return `${FRAME_DIR}/frame_${idx}_delay-${delay}s.webp`;
+        return `${FRAME_DIR}/frame_${idx}_delay-0.041s.webp`;
     }
 
     function getAltFramePath(index) {
-        const idx = String(index).padStart(3, '0');
-        const delay = (index % 3 === 2) ? '0.033' : '0.034';
-        return `${FRAME_DIR}/frame_${idx}_delay-${delay}s.webp`;
+        return getFramePath(index);
     }
 
     /* PRELOAD */
@@ -120,18 +89,16 @@
         const img = frames[index];
         if (!img) return;
         const cw = canvas.width, ch = canvas.height;
-        ctx.fillStyle = '#080808';
+        ctx.fillStyle = '#000000';
         ctx.fillRect(0, 0, cw, ch);
         const iw = img.naturalWidth, ih = img.naturalHeight;
 
-        // Stretch the image slightly more than just 'cover' to ensure the bottom edge is completely filled
-        // and add a slight downward offset multiplier to hide empty space at the bottom.
-        const scale = Math.max(cw / iw, ch / ih) * 1.03;
+        // "contain" style image drawing to prevent cropping
+        const scale = Math.min(cw / iw, ch / ih);
         const sw = iw * scale, sh = ih * scale;
 
-        // The image has negative space. Push it further down relative to the canvas.
         const sx = (cw - sw) / 2;
-        const sy = (ch - sh) / 1.5;
+        const sy = (ch - sh) / 2;
 
         ctx.drawImage(img, sx, sy, sw, sh);
     }
@@ -145,15 +112,20 @@
 
     function updateOnScroll() {
         ticking = false;
+        if (!heroSection) return;
+
         const heroRect = heroSection.getBoundingClientRect();
         const heroH = heroSection.offsetHeight;
         const viewH = window.innerHeight;
 
         const scrolled = -heroRect.top;
         const scrollRange = heroH - viewH;
-        const progress = Math.max(0, Math.min(1, scrolled / scrollRange));
+        let progress = 0;
+        if (scrollRange > 0) {
+            progress = Math.max(0, Math.min(1, scrolled / scrollRange));
+        }
 
-        const frameIndex = Math.min(TOTAL_FRAMES - 1, Math.floor(progress * (TOTAL_FRAMES - 1)));
+        const frameIndex = Math.min(TOTAL_FRAMES - 1, Math.floor(progress * TOTAL_FRAMES));
         if (frameIndex !== currentFrame && canvasReady) {
             currentFrame = frameIndex;
             drawFrame(currentFrame);
@@ -162,6 +134,10 @@
         // Scroll hint
         if (scrollHint) {
             scrollHint.classList.toggle('hidden', progress > 0.04);
+        }
+
+        if (heroEndCta) {
+            heroEndCta.classList.toggle('visible', progress >= 0.99);
         }
 
         // Navbar transition
@@ -202,34 +178,6 @@
             link.classList.remove('active');
             if (link.getAttribute('data-section') === currentSection) link.classList.add('active');
         });
-    }
-
-    /* VARIANT SWITCHING */
-    function switchVariant(direction) {
-        const newIndex = (currentVariant + direction + VARIANTS.length) % VARIANTS.length;
-        const variant = VARIANTS[newIndex];
-
-        heroContentLeft.classList.add('fading');
-
-        setTimeout(() => {
-            heroName.textContent = variant.name;
-            heroSubtitle.textContent = variant.subtitle;
-            heroDesc.textContent = variant.desc;
-            heroIndex.textContent = String(newIndex + 1).padStart(2, '0');
-
-            // Update accent color
-            document.documentElement.style.setProperty('--variant-accent', variant.accent);
-            document.documentElement.style.setProperty('--gold', variant.accent);
-
-            currentVariant = newIndex;
-
-            // Update dots
-            document.querySelectorAll('.variant-dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i === newIndex);
-            });
-
-            heroContentLeft.classList.remove('fading');
-        }, 350);
     }
 
     /* THEME */
@@ -407,16 +355,6 @@
         });
     }
 
-    /* VARIANT DOTS */
-    function initVariantDots() {
-        document.querySelectorAll('.variant-dot').forEach((dot, i) => {
-            dot.addEventListener('click', () => {
-                const direction = i - currentVariant;
-                if (direction !== 0) switchVariant(direction);
-            });
-        });
-    }
-
     /* INIT */
     async function init() {
         initTheme();
@@ -432,15 +370,12 @@
         window.addEventListener('resize', resizeCanvas);
         themeToggle.addEventListener('click', toggleTheme);
         hamburger.addEventListener('click', toggleMobileNav);
-        prevBtn.addEventListener('click', () => switchVariant(-1));
-        nextBtn.addEventListener('click', () => switchVariant(1));
 
         initFaq();
         initReveal();
         initSmoothScroll();
         initCounters();
         initProductFilter();
-        initVariantDots();
 
         updateOnScroll();
     }
