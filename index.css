@@ -71,15 +71,42 @@ body {
     line-height: 1.6;
     transition: background 0.5s var(--ease-out), color 0.5s var(--ease-out);
     -webkit-font-smoothing: antialiased;
+    cursor: none;
+    /* Hide default cursor */
+}
+
+/* Custom Cursor */
+#custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background 0.3s, border 0.3s, transform 0.1s linear;
+    mix-blend-mode: difference;
+}
+
+#custom-cursor.hovering {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.6);
 }
 
 a {
     color: inherit;
     text-decoration: none;
+    cursor: none;
 }
 
 button {
-    cursor: pointer;
+    cursor: none;
     border: none;
     background: none;
     font-family: inherit;
@@ -438,7 +465,8 @@ img {
 
 /* ===== HERO SECTION ===== */
 #hero-parallax {
-    height: 400vh;
+    height: 600vh;
+    /* Extremely weighty deliberate scroll */
     position: relative;
     background: #000000;
 }
@@ -460,23 +488,167 @@ img {
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     z-index: 1;
 }
 
+/* Section 1: Hero Entry */
+.hero-entry {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Changed from center */
+    justify-content: center;
+    text-align: left;
+    /* Changed from center */
+    pointer-events: none;
+    transition: opacity 1s var(--ease-out);
+    padding: 0 clamp(24px, 5vw, 80px);
+    /* Add padding to match container */
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.hero-entry.hidden {
+    opacity: 0;
+}
+
+.hero-entry-content {
+    opacity: 0;
+    transform: translateX(-20px);
+    /* Changed from translateY */
+    transition: opacity 1.5s var(--ease-out), transform 1.5s var(--ease-out);
+    transition-delay: 1s;
+    /* Delay for cinematic fade-in */
+}
+
+.hero-entry.loaded .hero-entry-content {
+    opacity: 1;
+    transform: translateX(0);
+    /* Changed from translateY */
+}
+
+.hero-entry-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 6rem);
+    letter-spacing: 0.25em;
+    color: #ffffff;
+    font-weight: 300;
+    margin-bottom: 8px;
+    text-indent: 0;
+    /* Removed text-indent for left alignment */
+}
+
+.hero-entry-subtitle {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.hero-scroll-indicator {
+    position: absolute;
+    bottom: clamp(40px, 6vw, 60px);
+    left: clamp(24px, 5vw, 80px);
+    /* Align to left container padding */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* keep arrow centered under text */
+    gap: 12px;
+    opacity: 0;
+    transition: opacity 1.5s var(--ease-out);
+    transition-delay: 2s;
+}
+
+.hero-entry.loaded .hero-scroll-indicator {
+    opacity: 1;
+}
+
+.hero-scroll-indicator span {
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.scroll-arrow {
+    color: rgba(255, 255, 255, 0.4);
+    animation: gentlePulse 2s ease-in-out infinite;
+}
+
+@keyframes gentlePulse {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.4;
+    }
+
+    50% {
+        transform: translateY(6px);
+        opacity: 1;
+    }
+}
+
+/* Section 3: Mid-Scroll Milestones */
+.scroll-milestones {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.milestone-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+.milestone-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.milestone-text p {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 300;
+    font-style: italic;
+    color: #fff;
+    max-width: 800px;
+    margin: 0 auto;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    /* Helps ensure readability over images */
+}
+
+/* Section 4: Final Reveal CTA */
 .hero-end-cta {
     position: absolute;
-    bottom: 20%;
+    bottom: 15%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 5;
     text-align: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 1s var(--ease-out);
+    transition: opacity 1.2s var(--ease-in-out);
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    max-width: 800px;
 }
 
 .hero-end-cta.visible {
@@ -497,13 +669,11 @@ img {
     background: var(--gold);
 }
 
-.hero-eyebrow-text {
-    font-size: 0.62rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--gold-light);
-    font-weight: 400;
-    text-indent: 0.4em;
+.hero-final-sub {
+    font-size: 0.95rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 32px;
 }
 
 .hero-product-name {

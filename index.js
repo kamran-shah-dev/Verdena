@@ -93,8 +93,8 @@
         ctx.fillRect(0, 0, cw, ch);
         const iw = img.naturalWidth, ih = img.naturalHeight;
 
-        // "contain" style image drawing to prevent cropping
-        const scale = Math.min(cw / iw, ch / ih);
+        // "cover" style image drawing to fill the screen
+        const scale = Math.max(cw / iw, ch / ih);
         const sw = iw * scale, sh = ih * scale;
 
         const sx = (cw - sw) / 2;
@@ -102,6 +102,31 @@
 
         ctx.drawImage(img, sx, sy, sw, sh);
     }
+
+    const cursor = document.createElement('div');
+    cursor.id = 'custom-cursor';
+    document.body.appendChild(cursor);
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+    });
+
+    document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+    });
+
+    const heroEntry = document.getElementById('hero-entry');
+    const milestoneElements = document.querySelectorAll('.milestone-text');
+    const milestoneData = Array.from(milestoneElements).map(el => ({
+        element: el,
+        frame: parseInt(el.getAttribute('data-frame'))
+    }));
 
     /* SCROLL */
     let ticking = false;
@@ -131,10 +156,18 @@
             drawFrame(currentFrame);
         }
 
-        // Scroll hint
-        if (scrollHint) {
-            scrollHint.classList.toggle('hidden', progress > 0.04);
+        // Section 1 logic
+        if (heroEntry) {
+            heroEntry.classList.toggle('hidden', progress > 0.05);
         }
+
+        // Section 3 logic (Milestones)
+        // Milestones stay visible for ~15 frames around their center.
+        const visibilityWindow = 15;
+        milestoneData.forEach(m => {
+            const visible = Math.abs(currentFrame - m.frame) < visibilityWindow;
+            m.element.classList.toggle('visible', visible);
+        });
 
         if (heroEndCta) {
             heroEndCta.classList.toggle('visible', progress >= 0.99);
@@ -364,7 +397,10 @@
         canvasReady = true;
         drawFrame(0);
 
-        setTimeout(() => preloader.classList.add('loaded'), 400);
+        setTimeout(() => {
+            preloader.classList.add('loaded');
+            if (heroEntry) heroEntry.classList.add('loaded');
+        }, 400);
 
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', resizeCanvas);

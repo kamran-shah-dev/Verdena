@@ -92,21 +92,49 @@
         <div class="hero-sticky">
             <canvas id="hero-canvas"></canvas>
 
-            <div class="hero-end-cta" id="hero-end-cta">
-                <div class="hero-eyebrow" style="justify-content: center;">
-                    <span class="hero-eyebrow-text">The Reveal</span>
+            <!-- SECTION 1: HERO ENTRY (Frame 001) -->
+            <div class="hero-entry" id="hero-entry">
+                <div class="hero-entry-content">
+                    <h1 class="hero-entry-title">VERDENA</h1>
+                    <p class="hero-entry-subtitle">Engineered for your skin.</p>
                 </div>
-                <h2 class="hero-product-name" style="font-size: clamp(3rem, 6vw, 5rem);">Inner Truth</h2>
-                <div class="hero-ctas" style="justify-content: center;">
-                    <button class="btn btn-primary">Shop Now</button>
-                    <button class="btn btn-ghost">Learn More</button>
+                <div class="hero-scroll-indicator">
+                    <span>Scroll to Reveal</span>
+                    <div class="scroll-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
                 </div>
             </div>
 
-            <div class="hero-scroll-hint" id="hero-scroll-hint">
-                <div class="scroll-line"></div>
-                <span>Scroll</span>
+            <!-- SECTION 3: MID-SCROLL OVERLAYS -->
+            <div class="scroll-milestones" id="scroll-milestones">
+                <div class="milestone-text" data-frame="40">
+                    <p>Powered by Marine Extract Complex</p>
+                </div>
+                <div class="milestone-text" data-frame="80">
+                    <p>12 bioactive layers. Zero compromise.</p>
+                </div>
+                <div class="milestone-text" data-frame="120">
+                    <p>Precision-formulated. Clinically proven.</p>
+                </div>
+                <div class="milestone-text" data-frame="160">
+                    <p>This is what luxury feels like.</p>
+                </div>
             </div>
+
+            <!-- SECTION 4: FINAL REVEAL (Frame 192+) -->
+            <div class="hero-end-cta" id="hero-end-cta">
+                <h2 class="hero-product-name">Every layer. Every ingredient. Intentional.</h2>
+                <p class="hero-product-desc hero-final-sub">Meet Verdena Facewash. The future of your routine.</p>
+                <div class="hero-ctas" style="justify-content: center;">
+                    <button class="btn btn-primary">Discover the Formula</button>
+                    <button class="btn btn-ghost">Shop Now</button>
+                </div>
+            </div>
+
         </div>
     </section>
 
